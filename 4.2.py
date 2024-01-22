@@ -1,3 +1,6 @@
+"""hueta ne rabotaet"""
+
+
 import requests
 from bs4 import BeautifulSoup
 import csv
@@ -30,15 +33,18 @@ def get_page_data(html):
     for tr in trs:
         tds = tr.find_all('td')
         try:
-            name = tds[2].find('div').find('div').find('div').find('div').find('p').text
+            name = tds[2].find('div').find('div').find(
+                'div').find('div').find('p').text
         except:
             name = ''
         try:
-            tiker = tds[2].find('div').find('div').find('div').find('div').find('div').find('p').text
+            tiker = tds[2].find('div').find('div').find(
+                'div').find('div').find('div').find('p').text
         except:
             tiker = ''
         try:
-            url = 'https://coinmarketcap.com' + tds[2].find('div').find('a').get('href')
+            url = 'https://coinmarketcap.com' + \
+                tds[2].find('div').find('a').get('href')
         except:
             url = ''
         try:
@@ -46,22 +52,23 @@ def get_page_data(html):
         except:
             price = ''
         # print(f'{name} - {tiker}; {url}; price - {price}')
-        # data = {'name': name, 'tiker': tiker, 'url': url, 'price': price}
-        # write_csv(data)
+        data = {'name': name, 'tiker': tiker, 'url': url, 'price': price}
+        write_csv(data)
 
 
 def main():
-    url = 'https://coinmarketcap.com/?page=1'
+    url = 'https://coinmarketcap.com/'
 
     while True:
         get_page_data(get_html(url))
 
         soup = BeautifulSoup(get_html(url), 'lxml')
         try:
-            url = 'https://coinmarketcap.com' + soup.find('ul', class_='pagination').find('li', class_='next').find('a').get('href')
+            url = 'https://coinmarketcap.com/' + \
+                soup.find('ul', class_='pagination').find(
+                    'li', class_='next').find('a').get('href')
         except:
             break
-        print(url)
 
 
 if __name__ == '__main__':

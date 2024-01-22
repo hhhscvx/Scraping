@@ -1,4 +1,4 @@
-import requests
+import requests  # парсинг заголовка на wordpress
 from bs4 import BeautifulSoup
 
 

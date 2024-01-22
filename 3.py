@@ -1,4 +1,4 @@
-import requests
+import requests  # парсинг криптовалют
 from bs4 import BeautifulSoup
 import csv
 
